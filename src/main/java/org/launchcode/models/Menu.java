@@ -1,17 +1,19 @@
 package org.launchcode.models;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Anna Hexter on 7/21/2017.
+ * Created by Anna Hexter on 7/29/2017.
  */
-
 @Entity
-public class Category {
+public class Menu {
 
     @Id
     @GeneratedValue
@@ -21,26 +23,27 @@ public class Category {
     @Size(min=3, max=15)
     private String name;
 
-    @OneToMany
-    @JoinColumn(name = "category_id")
+    @ManyToMany
     private List<Cheese> cheeses = new ArrayList<>();
 
-    public Category (String name) {
-        this.name = name;
-    }
+    public Menu(){ }
 
-    public Category () { }
+    public void addItem(Cheese item) { cheeses.add(item); }
 
     public int getId() {
         return id;
     }
 
-    public String getName() { return name; }
+    public String getName() {
+        return name;
+    }
 
     public void setName(String name) {
         this.name = name;
     }
 
-
+    public List<Cheese> getCheeses() {
+        return cheeses;
+    }
 
 }
